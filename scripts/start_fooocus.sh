@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export HF_HOME="/workspace"
-VENV_PATH=$(cat /workspace/stable-diffusion-webui-forge/venv_path)
+VENV_PATH=$(cat /workspace/Foocus/venv_path)
 source ${VENV_PATH}/bin/activate
 source /workspace/venv/bin/activate
 cd /workspace/Fooocus
