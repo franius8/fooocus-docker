@@ -124,6 +124,9 @@ COPY fooocus/config.txt /Fooocus/config.txt
 # Set template version
 ENV TEMPLATE_VERSION=2.1.865
 
+# Set the venv path
+ENV VENV_PATH="/workspace/venvs/fooocus"
+
 # Copy the scripts
 WORKDIR /
 COPY --chmod=755 scripts/* ./
