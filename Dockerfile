@@ -2,6 +2,9 @@
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
 ARG FOOOCUS_VERSION=2.2.0
+ARG TORCH_VERSION=2.0.1
+ARG XFORMERS_VERSION=0.0.22
+ARG TORCH_INDEX="https://download.pytorch.org/whl/cu118"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -72,9 +75,9 @@ RUN git clone https://github.com/lllyasviel/Fooocus.git && \
 
 # Install the dependencies for Fooocus
 WORKDIR /Fooocus
-ENV TORCH_INDEX_URL="https://download.pytorch.org/whl/cu118"
-ENV TORCH_COMMAND="pip install torch==2.0.1 torchvision --index-url ${TORCH_INDEX_URL}"
-ENV XFORMERS_PACKAGE="xformers==0.0.22"
+ENV TORCH_INDEX_URL=${TORCH_INDEX}
+ENV TORCH_COMMAND="pip install torch==${TORCH_VERSION} torchvision --index-url ${TORCH_INDEX_URL}"
+ENV XFORMERS_PACKAGE="xformers==${XFORMERS_VERSION}"
 RUN source /venv/bin/activate && \
     ${TORCH_COMMAND} && \
     pip3 install -r requirements_versions.txt --extra-index-url ${TORCH_INDEX_URL} && \
