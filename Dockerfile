@@ -1,7 +1,7 @@
 # Stage 1: Base
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
-ARG FOOOCUS_COMMIT=1c999be8c8134fe01a75723ea933858435856950
+ARG FOOOCUS_VERSION=2.2.0
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -68,7 +68,7 @@ RUN python3 -m venv /venv
 WORKDIR /
 RUN git clone https://github.com/lllyasviel/Fooocus.git && \
     cd /Fooocus && \
-    git checkout ${FOOOCUS_COMMIT}
+    git checkout ${FOOOCUS_VERSION}
 
 # Install the dependencies for Fooocus
 WORKDIR /Fooocus
@@ -122,7 +122,7 @@ COPY nginx/502.html /usr/share/nginx/html/502.html
 COPY fooocus/config.txt /Fooocus/config.txt
 
 # Set template version
-ENV TEMPLATE_VERSION=2.1.865
+ENV TEMPLATE_VERSION=2.2.0
 
 # Set the venv path
 ENV VENV_PATH="/workspace/venvs/fooocus"
