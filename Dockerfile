@@ -1,7 +1,7 @@
 # Stage 1: Base
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
-ARG FOOOCUS_VERSION=2.2.0
+ARG FOOOCUS_VERSION=2.2.1
 ARG TORCH_VERSION=2.0.1
 ARG XFORMERS_VERSION=0.0.22
 ARG TORCH_INDEX="https://download.pytorch.org/whl/cu118"
@@ -125,7 +125,7 @@ COPY nginx/502.html /usr/share/nginx/html/502.html
 COPY fooocus/config.txt /Fooocus/config.txt
 
 # Set template version
-ENV TEMPLATE_VERSION=2.2.0
+ENV TEMPLATE_VERSION=2.2.1
 
 # Set the venv path
 ENV VENV_PATH="/workspace/venvs/fooocus"
