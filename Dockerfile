@@ -1,18 +1,15 @@
 # Stage 1: Base
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
-ARG FOOOCUS_VERSION=2.2.1
-ARG TORCH_VERSION=2.0.1
-ARG XFORMERS_VERSION=0.0.22
-ARG TORCH_INDEX="https://download.pytorch.org/whl/cu118"
+ARG INDEX_URL
+ARG TORCH_VERSION
+ARG XFORMERS_VERSION
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=on \
     SHELL=/bin/bash
-
-WORKDIR /
 
 # Install Ubuntu packages
 RUN apt update && \
@@ -65,23 +62,24 @@ RUN ln -s /usr/bin/python3.10 /usr/bin/python
 FROM base as setup
 
 # Create and use the Python venv
+WORKDIR /
 RUN python3 -m venv /venv
 
 # Clone the git repo of Fooocus and set version
-WORKDIR /
+ARG FOOOCUS_VERSION
 RUN git clone https://github.com/lllyasviel/Fooocus.git && \
     cd /Fooocus && \
     git checkout ${FOOOCUS_VERSION}
 
 # Install the dependencies for Fooocus
 WORKDIR /Fooocus
-ENV TORCH_INDEX_URL=${TORCH_INDEX}
+ENV TORCH_INDEX_URL=${INDEX_URL}
 ENV TORCH_COMMAND="pip install torch==${TORCH_VERSION} torchvision --index-url ${TORCH_INDEX_URL}"
 ENV XFORMERS_PACKAGE="xformers==${XFORMERS_VERSION}"
 RUN source /venv/bin/activate && \
     ${TORCH_COMMAND} && \
     pip3 install -r requirements_versions.txt --extra-index-url ${TORCH_INDEX_URL} && \
-    pip3 install ${XFORMERS_PACKAGE} &&  \
+    pip3 install ${XFORMERS_PACKAGE} --index-url ${TORCH_INDEX_URL} &&  \
     sed '$d' launch.py > setup.py && \
     python3 -m setup && \
     deactivate
@@ -103,7 +101,8 @@ RUN curl -sSL https://github.com/kodxana/RunPod-FilleUploader/raw/main/scripts/i
 RUN curl https://rclone.org/install.sh | bash
 
 # Install runpodctl
-RUN wget https://github.com/runpod/runpodctl/releases/download/v1.13.0/runpodctl-linux-amd64 -O runpodctl && \
+ARG RUNPODCTL_VERSION
+RUN wget "https://github.com/runpod/runpodctl/releases/download/${RUNPODCTL_VERSION}/runpodctl-linux-amd64" -O runpodctl && \
     chmod a+x runpodctl && \
     mv runpodctl /usr/local/bin
 
@@ -125,10 +124,12 @@ COPY nginx/502.html /usr/share/nginx/html/502.html
 COPY fooocus/config.txt /Fooocus/config.txt
 
 # Set template version
-ENV TEMPLATE_VERSION=2.2.1
+ARG RELEASE
+ENV TEMPLATE_VERSION=${RELEASE}
 
 # Set the venv path
-ENV VENV_PATH="/workspace/venvs/fooocus"
+ARG VENV_PATH
+ENV VENV_PATH=${VENV_PATH}
 
 # Copy the scripts
 WORKDIR /
