@@ -6,9 +6,9 @@
 * CUDA 11.8
 * Python 3.10.12
 * [Fooocus](
-  https://github.com/lllyasviel/Fooocus) 2.2.1
-* Torch 2.0.1
-* xformers 0.0.22
+  https://github.com/lllyasviel/Fooocus) 2.3.0
+* Torch 2.1.2
+* xformers 0.0.23.post1
 * Jupyter Lab
 * [runpodctl](https://github.com/runpod/runpodctl)
 * [OhMyRunPod](https://github.com/kodxana/OhMyRunPod)
