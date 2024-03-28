@@ -24,6 +24,7 @@ target "default" {
         XFORMERS_VERSION = "0.0.23.post1+cu${CU_VERSION}"
         FOOOCUS_VERSION = "2.3.1"
         RUNPODCTL_VERSION = "v1.14.2"
+        CIVITAI_DOWNLOADER_VERSION = "2.0.1"
         VENV_PATH = "/workspace/venvs/fooocus"
     }
 }
