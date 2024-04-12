@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # Create and use the Python venv
 WORKDIR /
-RUN python3 -m venv /venv
+RUN python3 -m venv --system-site-packages /venv
 
 # Clone the git repo of Fooocus and set version
 ARG FOOOCUS_VERSION
