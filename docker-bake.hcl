@@ -19,7 +19,7 @@ variable "CU_VERSION" {
 }
 
 variable "BASE_IMAGE_VERSION" {
-    default = "1.0.2"
+    default = "1.2.0"
 }
 
 variable "CUDA_VERSION" {
