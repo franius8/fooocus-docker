@@ -18,6 +18,10 @@ variable "CU_VERSION" {
     default = "118"
 }
 
+variable "BASE_IMAGE_REPOSITORY" {
+    default = "ashleykza/runpod-base"
+}
+
 variable "BASE_IMAGE_VERSION" {
     default = "1.2.0"
 }
