@@ -10,12 +10,12 @@
 ## Installs
 
 * Ubuntu 22.04 LTS
-* CUDA 11.8
+* CUDA 12.1
 * Python 3.10.12
 * [Fooocus](
-  https://github.com/lllyasviel/Fooocus) 2.3.1
-* Torch 2.1.2
-* xformers 0.0.23.post1
+  https://github.com/lllyasviel/Fooocus) 2.4.0
+* Torch 2.3.0
+* xformers 0.0.26
 * Jupyter Lab
 * [runpodctl](https://github.com/runpod/runpodctl)
 * [OhMyRunPod](https://github.com/kodxana/OhMyRunPod)
