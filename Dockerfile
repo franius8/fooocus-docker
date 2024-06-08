@@ -43,6 +43,9 @@ RUN git clone https://github.com/ashleykleynhans/civitai-downloader.git && \
     cd .. && \
     rm -rf civitai-downloader
 
+# Download realistic vision
+RUN wget -P ./Fooocus/models/checkpoints https://civitai.com/api/download/models/501240 
+
 # Remove existing SSH host keys
 RUN rm -f /etc/ssh/ssh_host_*
 
